@@ -19,6 +19,11 @@ export class TypeOrmVehicleRepositoryAdapter implements VehicleRepositoryPort {
     return entity ? entity.toDomainModel() : null;
   }
 
+  async findByLicensePlate(licensePlate: string): Promise<Vehicle | null> {
+    const entity = await this.vehicleRepository.findOne({ where: { licensePlate } });
+    return entity ? entity.toDomainModel() : null;
+  }
+
   async save(vehicle: Vehicle): Promise<Vehicle> {
     const entity = VehicleEntity.fromDomainModel(vehicle);
     const savedEntity = await this.vehicleRepository.save(entity);

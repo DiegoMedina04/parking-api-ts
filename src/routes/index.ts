@@ -9,6 +9,9 @@ import { createPlanRouter } from './plan.routes';
 import { createRoleRouter } from './role.routes';
 import { createSubscriptionRouter } from './subscription.routes';
 import { createAuthRouter } from './auth.routes';
+import { createClientRouter } from './client.routes';
+import { createVehicleTypeRouter } from './vehicleType.routes';
+import { createVehicleRouter } from './vehicle.routes';
 
 const router = Router();
 
@@ -29,5 +32,8 @@ router.use('/parqueadero', (req, res, next) => createParkingRouter(DependencyInj
 router.use('/plan', (req, res, next) => createPlanRouter(DependencyInjection.getPlanController())(req, res, next));
 router.use('/role', (req, res, next) => createRoleRouter(DependencyInjection.getRoleController())(req, res, next));
 router.use('/subscription', (req, res, next) => createSubscriptionRouter(DependencyInjection.getSubscriptionController())(req, res, next));
+router.use('/client', (req, res, next) => createClientRouter(DependencyInjection.getClientController())(req, res, next));
+router.use('/vehicle-type', (req, res, next) => createVehicleTypeRouter(DependencyInjection.getVehicleTypeController())(req, res, next));
+router.use('/vehicle', (req, res, next) => createVehicleRouter(DependencyInjection.getVehicleController())(req, res, next));
 
 export default router;

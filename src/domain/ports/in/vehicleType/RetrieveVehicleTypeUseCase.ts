@@ -1,6 +1,6 @@
-import { VehicleType } from '../../../domain/models/VehicleType';
+import { VehicleType } from '../../../../domain/models/VehicleType';
 
 export interface RetrieveVehicleTypeUseCase {
-    findAll(): Promise<VehicleType[]>;
+    getVehicleTypes(): Promise<VehicleType[]>;
     findById(id: string): Promise<VehicleType | null>;
 }

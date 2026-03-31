@@ -16,7 +16,7 @@ export class VehicleTypeEntity {
     const entity = new VehicleTypeEntity();
     if (vehicleType.id) entity.id = vehicleType.id;
     entity.name = vehicleType.name;
-    entity.name_unique = vehicleType.name.toLowerCase();
+    entity.name_unique = vehicleType?.name?.toLowerCase();
     return entity;
   }
 

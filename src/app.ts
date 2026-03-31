@@ -4,6 +4,7 @@ import dotenv from 'dotenv';
 import apiRoutes from './routes';
 import swaggerUi from 'swagger-ui-express';
 import { swaggerSpec } from './infraestructure/config/SwaggerConfig';
+import { globalExceptionHandler } from './infraestructure/middleware/GlobalExceptionHandler';
 
 dotenv.config();
 
@@ -23,5 +24,8 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 app.get('/', (req: Request, res: Response) => {
   res.send('Parking API is running...');
 });
+
+// Global Error Handler
+app.use(globalExceptionHandler);
 
 export default app;

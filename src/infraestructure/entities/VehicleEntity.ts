@@ -19,9 +19,9 @@ export class VehicleEntity {
   @JoinColumn({ name: 'vehicle_type_id' })
   type!: VehicleTypeEntity;
 
-  @ManyToOne(() => ClientEntity, { nullable: false })
+  @ManyToOne(() => ClientEntity, { nullable: true })
   @JoinColumn({ name: 'client_id' })
-  client!: ClientEntity;
+  client?: ClientEntity;
 
   @ManyToOne(() => ParkingEntity, { nullable: false })
   @JoinColumn({ name: 'parking_id' })
