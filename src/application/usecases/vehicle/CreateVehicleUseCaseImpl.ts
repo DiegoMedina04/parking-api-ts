@@ -34,7 +34,6 @@ export class CreateVehicleUseCaseImpl implements CreateVehicleUseCase {
         vehicle.registrationDate = new Date();
     }
     
-    // Validar duplicidad de placa
     const existingVehicle = await this.vehicleRepositoryPort.findByLicensePlate(vehicle.licensePlate);
     if (existingVehicle) {
         throw new BadRequestError(`Vehicle with license plate ${vehicle.licensePlate} already exists`);

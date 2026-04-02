@@ -10,6 +10,7 @@ import { SubscriptionEntity } from '../entities/SubscriptionEntity';
 import { ClientEntity } from '../entities/ClientEntity';
 import { VehicleEntity } from '../entities/VehicleEntity';
 import { VehicleTypeEntity } from '../entities/VehicleTypeEntity';
+import { TicketEntity } from '../entities/TicketEntity';
 
 dotenv.config();
 
@@ -24,13 +25,14 @@ export const AppDataSource = new DataSource({
   logging: false,
   entities: [
     UserEntity,
+    RoleEntity,
     ParkingEntity,
     PlanEntity,
-    RoleEntity,
     SubscriptionEntity,
     ClientEntity,
     VehicleEntity,
-    VehicleTypeEntity
+    VehicleTypeEntity,
+    TicketEntity
   ],
   subscribers: [],
   migrations: [],

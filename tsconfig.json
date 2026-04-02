@@ -11,10 +11,6 @@
     "forceConsistentCasingInFileNames": true,
     "moduleResolution": "Node16",
     "resolveJsonModule": true,
-    "baseUrl": "src",
-    "paths": {
-      "@/*": ["*"]
-    },
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true
   },

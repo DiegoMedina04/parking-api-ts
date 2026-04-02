@@ -12,6 +12,7 @@ import { createAuthRouter } from './auth.routes';
 import { createClientRouter } from './client.routes';
 import { createVehicleTypeRouter } from './vehicleType.routes';
 import { createVehicleRouter } from './vehicle.routes';
+import { createTicketRouter } from './ticket.routes';
 
 const router = Router();
 
@@ -35,5 +36,6 @@ router.use('/subscription', (req, res, next) => createSubscriptionRouter(Depende
 router.use('/client', (req, res, next) => createClientRouter(DependencyInjection.getClientController())(req, res, next));
 router.use('/vehicle-type', (req, res, next) => createVehicleTypeRouter(DependencyInjection.getVehicleTypeController())(req, res, next));
 router.use('/vehicle', (req, res, next) => createVehicleRouter(DependencyInjection.getVehicleController())(req, res, next));
+router.use('/ticket', (req, res, next) => createTicketRouter(DependencyInjection.getTicketController())(req, res, next));
 
 export default router;

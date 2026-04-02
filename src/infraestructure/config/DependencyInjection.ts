@@ -9,6 +9,7 @@ import { RoleEntity } from '../entities/RoleEntity';
 import { SubscriptionEntity } from '../entities/SubscriptionEntity';
 import { ClientEntity } from '../entities/ClientEntity';
 import { VehicleEntity } from '../entities/VehicleEntity';
+import { TicketEntity } from '../entities/TicketEntity';
 import { VehicleTypeEntity } from '../entities/VehicleTypeEntity';
 
 // Repository Adapters
@@ -19,6 +20,7 @@ import { TypeOrmRoleRepositoryAdapter } from '../repositories/TypeOrmRoleReposit
 import { TypeOrmSubscriptionRepositoryAdapter } from '../repositories/TypeOrmSubscriptionRepositoryAdapter';
 import { TypeOrmClientRepositoryAdapter } from '../repositories/TypeOrmClientRepositoryAdapter';
 import { TypeOrmVehicleRepositoryAdapter } from '../repositories/TypeOrmVehicleRepositoryAdapter';
+import { TypeOrmTicketRepositoryAdapter } from '../repositories/TypeOrmTicketRepositoryAdapter';
 import { TypeOrmVehicleTypeRepositoryAdapter } from '../repositories/TypeOrmVehicleTypeRepositoryAdapter';
 
 // Use Case Implementations
@@ -36,6 +38,8 @@ import { CreateClientUseCaseImpl } from '../../application/usecases/client/Creat
 import { RetrieveClientUseCaseImpl } from '../../application/usecases/client/RetrieveClientUseCaseImpl';
 import { CreateVehicleUseCaseImpl } from '../../application/usecases/vehicle/CreateVehicleUseCaseImpl';
 import { RetrieveVehicleUseCaseImpl } from '../../application/usecases/vehicle/RetrieveVehicleUseCaseImpl';
+import { CreateTicketUseCaseImpl } from '../../application/usecases/ticket/CreateTicketUseCaseImpl';
+import { RetrieveTicketUseCaseImpl } from '../../application/usecases/ticket/RetrieveTicketUseCaseImpl';
 import { CreateVehicleTypeUseCaseImpl } from '../../application/usecases/vehicleType/CreateVehicleTypeUseCaseImpl';
 import { RetrieveVehicleTypeUseCaseImpl } from '../../application/usecases/vehicleType/RetrieveVehicleTypeUseCaseImpl';
 
@@ -47,6 +51,7 @@ import { RoleService } from '../../application/services/RoleService';
 import { SubscriptionService } from '../../application/services/SubscriptionService';
 import { ClientService } from '../../application/services/ClientService';
 import { VehicleService } from '../../application/services/VehicleService';
+import { TicketService } from '../../application/services/TicketService';
 import { VehicleTypeService } from '../../application/services/VehicleTypeService';
 
 // Controllers
@@ -59,6 +64,7 @@ import { AuthController } from '../controllers/AuthController';
 import { ClientController } from '../controllers/ClientController';
 import { VehicleController } from '../controllers/VehicleController';
 import { VehicleTypeController } from '../controllers/VehicleTypeController';
+import { TicketController } from '../controllers/TicketController';
 
 export class DependencyInjection {
 
@@ -78,6 +84,14 @@ export class DependencyInjection {
     const retrieveUC = new RetrieveParkingUseCaseImpl(repo);
     const service = new ParkingService(retrieveUC, createUC);
     return new ParkingController(service);
+  }
+
+  static getTicketController(): TicketController {
+    const repo = new TypeOrmTicketRepositoryAdapter(AppDataSource.getRepository(TicketEntity));
+    const createUC = new CreateTicketUseCaseImpl(repo);
+    const retrieveUC = new RetrieveTicketUseCaseImpl(repo);
+    const service = new TicketService(retrieveUC, createUC);
+    return new TicketController(service);
   }
 
   static getPlanController(): PlanController {
