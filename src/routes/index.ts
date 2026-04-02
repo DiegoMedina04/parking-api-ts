@@ -13,6 +13,7 @@ import { createClientRouter } from './client.routes';
 import { createVehicleTypeRouter } from './vehicleType.routes';
 import { createVehicleRouter } from './vehicle.routes';
 import { createTicketRouter } from './ticket.routes';
+import { createTicketPaymentRouter } from './ticketPayment.routes';
 
 const router = Router();
 
@@ -37,5 +38,6 @@ router.use('/client', (req, res, next) => createClientRouter(DependencyInjection
 router.use('/vehicle-type', (req, res, next) => createVehicleTypeRouter(DependencyInjection.getVehicleTypeController())(req, res, next));
 router.use('/vehicle', (req, res, next) => createVehicleRouter(DependencyInjection.getVehicleController())(req, res, next));
 router.use('/ticket', (req, res, next) => createTicketRouter(DependencyInjection.getTicketController())(req, res, next));
+router.use('/ticket-payment', (req, res, next) => createTicketPaymentRouter(DependencyInjection.getTicketPaymentController())(req, res, next));
 
 export default router;
