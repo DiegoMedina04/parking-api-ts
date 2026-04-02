@@ -16,12 +16,8 @@ export class TicketController {
      *         description: List of tickets
      */
     async findAll(req: Request, res: Response) {
-        try {
-            const tickets = await this.ticketService.getTickets();
-            res.json(tickets);
-        } catch (error: any) {
-            res.status(500).json({ message: error.message });
-        }
+        const tickets = await this.ticketService.getTickets();
+        res.json(tickets);
     }
 
     /**
@@ -43,15 +39,11 @@ export class TicketController {
      *         description: Ticket not found
      */
     async findById(req: Request, res: Response) {
-        try {
-            const ticket = await this.ticketService.findById(req.params.id as string);
-            if (ticket) {
-                res.json(ticket);
-            } else {
-                res.status(404).json({ message: 'Ticket not found' });
-            }
-        } catch (error: any) {
-            res.status(500).json({ message: error.message });
+        const ticket = await this.ticketService.findById(req.params.id as string);
+        if (ticket) {
+            res.json(ticket);
+        } else {
+            res.status(404).json({ message: 'Ticket not found' });
         }
     }
 
@@ -72,13 +64,43 @@ export class TicketController {
      *         description: Created
      */
     async save(req: Request, res: Response) {
-        try {
-            const ticketData = req.body as Ticket;
-            const newTicket = await this.ticketService.save(ticketData);
-            res.status(201).json(newTicket);
-        } catch (error: any) {
-            res.status(500).json({ message: error.message });
-        }
+        const ticketData = req.body as Ticket;
+        const newTicket = await this.ticketService.save(ticketData);
+        res.status(201).json(newTicket);
+    }
+
+    /**
+     * @swagger
+     * /ticket/checkout/{id}:
+     *   patch:
+     *     summary: Checkout a ticket (Update exit date and close)
+     *     tags: [Ticket]
+     *     parameters:
+     *       - in: path
+     *         name: id
+     *         required: true
+     *         schema:
+     *           type: string
+     *     requestBody:
+     *       content:
+     *         application/json:
+     *           schema:
+     *             type: object
+     *             properties:
+     *               exitDate:
+     *                 type: string
+     *                 format: date-time
+     *     responses:
+     *       200:
+     *         description: Ticket checked out
+     *       404:
+     *         description: Ticket not found
+     */
+    async checkout(req: Request, res: Response) {
+        const id = req.params.id as string;
+        const { exitDate } = req.body;
+        const updatedTicket = await this.ticketService.checkout(id, exitDate ? new Date(exitDate) : undefined);
+        res.json(updatedTicket);
     }
 
     /**
@@ -100,15 +122,12 @@ export class TicketController {
      *         description: No active ticket found
      */
     async getActiveTicketByVehicleId(req: Request, res: Response) {
-        try {
-            const ticket = await this.ticketService.getActiveTicketByVehicleId(req.params.vehicleId as string);
-            if (ticket) {
-                res.json(ticket);
-            } else {
-                res.status(404).json({ message: 'No active ticket found for this vehicle' });
-            }
-        } catch (error: any) {
-            res.status(500).json({ message: error.message });
+        const vehicleId = req.params.vehicleId as string;
+        const ticket = await this.ticketService.getActiveTicketByVehicleId(vehicleId);
+        if (ticket) {
+            res.json(ticket);
+        } else {
+            res.status(404).json({ message: 'No active ticket found for this vehicle' });
         }
     }
 }

@@ -65,6 +65,7 @@ import { ClientController } from '../controllers/ClientController';
 import { VehicleController } from '../controllers/VehicleController';
 import { VehicleTypeController } from '../controllers/VehicleTypeController';
 import { TicketController } from '../controllers/TicketController';
+import { UpdateTicketUseCaseImpl } from '../../application/usecases/ticket/UpdateTicketUseCaseImpl';
 
 export class DependencyInjection {
 
@@ -88,9 +89,11 @@ export class DependencyInjection {
 
   static getTicketController(): TicketController {
     const repo = new TypeOrmTicketRepositoryAdapter(AppDataSource.getRepository(TicketEntity));
-    const createUC = new CreateTicketUseCaseImpl(repo);
+    const vehicleRepo = new TypeOrmVehicleRepositoryAdapter(AppDataSource.getRepository(VehicleEntity));
+    const createUC = new CreateTicketUseCaseImpl(repo, vehicleRepo);
     const retrieveUC = new RetrieveTicketUseCaseImpl(repo);
-    const service = new TicketService(retrieveUC, createUC);
+    const updateUC = new UpdateTicketUseCaseImpl(repo);
+    const service = new TicketService(retrieveUC, createUC, updateUC);
     return new TicketController(service);
   }
 
